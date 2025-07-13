@@ -1,31 +1,8 @@
-# NotesVault – A Personal Notes Management App 📝
-
-**NotesVault** is a backend-focused project built using **Python** (with Flask or FastAPI) that allows users to securely create, read, update, and delete personal notes. This project is ideal for beginners looking to solidify their understanding of backend development, routing, and CRUD operations.
-
----
-
-## 🚀 Features
-
-- RESTful APIs for:
-  - Creating a note
-  - Viewing all notes
-  - Updating a note
-  - Deleting a note
-- SQLite support (or PostgreSQL for advanced users)
-- Clean code structure with modular routing
-- Optional user authentication with JWT (bonus)
-- CORS enabled for frontend integration (if added)
-
----
-
-## 🧰 Tech Stack
-
-- **Language:** Python  
-- **Framework:** Flask or FastAPI  
-- **Database:** SQLite / PostgreSQL  
-- **Optional:** HTML/CSS (for a basic frontend)
+An intelligent, full-stack virtual assistant built with Python that interacts with users through voice and natural language. Integrated with LLM APIs (like OpenAI, Gemini, or Cohere), it can answer complex queries, hold conversations, generate content, perform web searches, control applications, and manage system tasks — delivering a hands-free, personalized AI experience.
 
 ## 👨‍💻 Contributor
 
 - [AI-ash](https://github.com/AI-ash)
+- [Ashu-10-tech](https://github.com/Ashu-10-tech)
+
 
