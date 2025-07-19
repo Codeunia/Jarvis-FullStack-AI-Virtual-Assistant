@@ -1,0 +1,16 @@
+appopener
+audioplayer
+psutil
+pyaudio
+PyAutoGUI
+pyjokes
+python-dotenv
+pyttsx
+pywikihow
+pywhatkit
+requests
+SpeechRecognition
+speedtest-cli
+urllib3
+wikipedia
+wolframalpha
