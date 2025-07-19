@@ -25,7 +25,7 @@ from dotenv import load_dotenv
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
 # print(voices[0].id)
-engine.setProperty('voice',voices[0].id) #you can change the voices with chnging it's index
+engine.setProperty('voice',voices[0].id) #you can change the voices with changing it's index
 engine.setProperty('rate',180)
 
 def speak(audio):
@@ -33,48 +33,27 @@ def speak(audio):
     print(audio)
     engine.runAndWait()
 
-# def take_command():
-#     r = sr.Recognizer()
-#     with sr.Microphone(device_index=0) as source:
-#         print("listenting....")
-#         r.pause_threshold = 1
-#         audio = r.listen(source,timeout=3,phrase_time_limit=5)
-
-#     try:
-#         print("Recognizing...")
-#         query = r.recognize_google(audio, language='en-in')
-#         #print(f"User said: {query}")
-
-#     except Exception :
-#         #speak("Say that again please...")
-#         return "none"
-#     query = query.lower()
-#     return query
-
 def take_command():
     r = sr.Recognizer()
-    with sr.Microphone(device_index=11) as source:
-        print("Listening...")
-        r.adjust_for_ambient_noise(source, duration=1)  # Helps reduce false triggers
+    with sr.Microphone(device_index=0) as source:
+        print("listenting....")
         r.pause_threshold = 1
-        try:
-            audio = r.listen(source, timeout=3, phrase_time_limit=5)
-        except sr.WaitTimeoutError:
-            print("Listening timed out while waiting for phrase to start")
-            return "none"
+        audio = r.listen(source,timeout=3,phrase_time_limit=5)
 
     try:
         print("Recognizing...")
         query = r.recognize_google(audio, language='en-in')
-    except Exception as e:
-        print(f"Recognition error: {e}")
-        return "none"
+        #print(f"User said: {query}")
 
-    return query.lower()
+    except Exception :
+        #speak("Say that again please...")
+        return "none"
+    query = query.lower()
+    return query
 
 
 def wish():
-    AudioPlayer("C:/Users/shivam/Desktop/Projects/Jarvis/src/jarivs wish.mp3").play(block=True)
+    AudioPlayer(".../src/jarivs wish.mp3").play(block=True)# change directory as per need
     hour = int(datetime.datetime.now().hour)
     t = time.localtime()
     currenttime = time.strftime("%H:%M %p", t)
@@ -123,12 +102,8 @@ def i_speed():
 def taskExecution():
      wish ()
      while True:
-         
-    #  if 1:
-
           query = take_command().lower()
 
-          
         
           if "open"in query:
               if 'jarvis' in query:
@@ -152,7 +127,7 @@ def taskExecution():
               battery()
 
           if "introduce yourself" in query:
-              AudioPlayer("C://Users//shivam//Desktop//Projects//Jarvis//src//jarvis intro.mp3").play(block=True)
+              AudioPlayer(".../src//jarvis intro.mp3").play(block=True) # change directory as per need
                 
           if "internet speed" in query:
               i_speed()
