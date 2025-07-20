@@ -1,5 +1,6 @@
 appopener
 audioplayer
+dotenv
 psutil
 pyaudio
 PyAutoGUI
