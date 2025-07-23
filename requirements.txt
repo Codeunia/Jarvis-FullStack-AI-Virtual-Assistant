@@ -8,6 +8,7 @@ PyAutoGUI
 pyjokes
 python-dotenv
 pyttsx3
+pywhatkit
 requests
 SpeechRecognition
 speedtest-cli
