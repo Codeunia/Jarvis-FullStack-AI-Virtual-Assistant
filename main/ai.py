@@ -5,13 +5,11 @@ import AppOpener
 import requests
 import random
 import webbrowser
-import pywhatkit
 import pyautogui
+import pywhatkit
 import time
 import datetime
 from datetime import date, timedelta
-from subprocess import call
-from urllib.request import Request, urlopen
 import psutil
 import speedtest
 from audioplayer import AudioPlayer
