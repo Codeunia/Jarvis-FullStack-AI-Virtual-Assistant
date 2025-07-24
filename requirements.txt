@@ -1,7 +1,8 @@
 appopener
 audioplayer
+deep_translator
 dotenv
-ollama
+groq
 psutil
 pyaudio
 PyAutoGUI

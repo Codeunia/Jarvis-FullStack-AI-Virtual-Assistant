@@ -14,7 +14,8 @@ import psutil
 import speedtest
 from audioplayer import AudioPlayer
 from dotenv import load_dotenv
-from ollama import chat
+from groq import Groq
+from deep_translator import GoogleTranslator
 load_dotenv()
 
 def speak(audio):
@@ -35,12 +36,18 @@ def take_command():
     try:
         with sr.Microphone(device_index=1) as source:  # change index to your microphone check which suits you better
             print("Listening...")
-            r.adjust_for_ambient_noise(source, duration=1)
-            audio = r.listen(source, timeout=5, phrase_time_limit=7)
+            r.adjust_for_ambient_noise(source, duration=0.5)
+            audio = r.listen(source, timeout=7, phrase_time_limit=10)
 
         print("Recognizing...")
-        query = r.recognize_google(audio, language='en-in')
-        return query.lower()
+        spoken_text = r.recognize_google(audio, language='hi-IN')  # Mixed Hindi + English
+
+        translated = GoogleTranslator(source='auto', target='en').translate(spoken_text)
+
+        if translated.lower() != spoken_text.lower():
+            return translated.lower()
+        else:
+            return spoken_text.lower()
 
     except sr.WaitTimeoutError:
         print("Listening timed out.")
@@ -71,11 +78,25 @@ def wish():
 
     speak("I am ready to work sir.")
 
-def lama(prompt):
-    messages = [{ 'role': 'user','content': f'{prompt}', },]
-    response = chat('tinyllama:latest', messages=messages)  #you can change models according to your prefrence, heres i using tinyllama bcz thats what my system supports
-    speak(response['message']['content'])
+def ai_talk(prompt):
+    client = Groq(
+    api_key=os.getenv("GROQ_API_KEY"),)
+    prompt = prompt.replace("jarvis","")
 
+    chat_completion = client.chat.completions.create(
+    messages=[
+        {"role": "system",
+            "content": "You are a smart personal assistant but an Indian desi boy and your name is jarvis that provides answer to the user questions in efficient way not too long somwhere between 2-3 summary. and answer a question in human way",},
+        {
+            "role": "user",
+            "content": f"{prompt}",
+        }
+    ],
+    model="llama-3.3-70b-versatile",
+    temperature=2,
+)
+    speak(chat_completion.choices[0].message.content)
+            
 def news():
     speak("Fetching the latest news.")
     try:
@@ -90,9 +111,8 @@ def news():
         else:
             for ar in articles[:5]:  # Only take up to 5 art
                 head.append(ar.get("title", "No Title"))
-
+        speak("Here some latest news: ")
         for i in range(len(head)):
-            speak("Here some latest news: ")
             speak(f"{head[i]}")
     except Exception as e:
         speak("Unable to fetch news at the moment.")
@@ -158,7 +178,7 @@ def play():
     speak(f"Playing {song} on YouTube")
 
 def hru(query):
-    lama(query)
+    ai_talk(query)
     speak(" what about you?")
     condition = take_command()
     if any(word in condition for word in ["fine", "good", "happy"]):
@@ -229,7 +249,7 @@ def taskExecution():
 
                 else:
                     try:
-                        lama(query)
+                        ai_talk(query)
                     except Exception as e:
                         speak("Sorry sir, I couldn’t process the query. Because of ",e)
             
