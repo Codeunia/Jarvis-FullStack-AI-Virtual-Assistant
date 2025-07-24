@@ -1,0 +1,245 @@
+import os, json, sys, psutil, subprocess, difflib, win32gui, win32con
+
+# Defining a custom error message called AppNotFound
+class AppNotFound(Exception):
+    def __init__(self, app_name):
+        self.app_name = app_name
+    
+    def __str__(self):
+        return f"{self.app_name} is not running"
+
+# COLORSHEET FOR TERMINAL WARNINGS !
+class style():
+    BLACK = '\033[30m'
+    RED = '\033[31m'
+    GREEN = '\033[32m'
+    YELLOW = '\033[33m'
+    BLUE = '\033[34m'
+    MAGENTA = '\033[35m'
+    CYAN = '\033[36m'
+    WHITE = '\033[37m'
+    UNDERLINE = '\033[4m'
+    RESET = '\033[0m'
+
+os.system("")
+
+# Get path of working directory
+def get_path():
+    if getattr(sys, 'frozen', False):
+        main_path = os.path.dirname(sys.executable)
+        return main_path
+    elif __file__:
+        main_path = os.path.dirname(__file__)
+        return main_path
+
+main_path = os.path.join(get_path(),"Data")
+
+# FUNCTION FOR OPENING APPLICATIONS
+def open_things(self, output=True, match_closest=False, throw_error=False):
+    with open ((os.path.join(main_path,"data.json")),"r") as f:
+        data1 = json.load(f)
+        keys = data1.keys()
+        try:
+            dir01 = data1[self]
+            os.system("explorer shell:appsFolder\\"+dir01)
+            # print(("explorer shell:appsFolder\\"+dir01))
+            if output:
+                print("OPENING "+self.upper())
+        except:
+            result = difflib.get_close_matches(self,keys, n=1, cutoff=0.6)
+            app_name = ' '.join(result).strip()
+            if result:
+                if output:
+                    print()
+                    print("Closest match to "+self.upper()+" : "+str(result))
+                    print(f'Try : [open("{self}", match_closest=True)]')
+                    print()
+                if match_closest:
+                    dir01 = data1[app_name]
+                    os.system("explorer shell:appsFolder\\"+dir01)
+                    # print("explorer shell:appsFolder\\"+app_name)
+                    if output:
+                        print("OPENING "+app_name.upper())
+            else:
+                if output:
+                    if throw_error:
+                        # Throwing an error if throw_error is true
+                        raise AppNotFound(self.upper())
+                    else:
+                        print(f"{self.upper()} NOT FOUND... TYPE (LS) for list of applications.")
+            pass
+
+# EXCEPTION FOR CLOSING FILE EXPLORER
+def close_explorer(output: bool, throw_error: bool, app_name: str):
+    handles = []
+    win32gui.EnumWindows(lambda hwnd, param: param.append(hwnd) if win32gui.GetClassName(hwnd) == 'CabinetWClass' else None, handles)
+    # close all File Explorer windows
+    for handle in handles:
+        win32gui.PostMessage(handle, win32con.WM_CLOSE, 0, 0)
+    if not handles:
+        if output:
+            print((app_name.replace(".exe","")).upper() +" is not running")
+    else:
+        if output:
+            print("CLOSING "+(app_name.replace(".exe","")).upper())
+    if throw_error:
+        app_name = (app_name).upper()
+        raise AppNotFound(app_name)
+
+# CLOSE SEVERAL THINGS :)
+def close_things(self, output=True, match_closest=False, throw_error=False):
+    if not self.endswith(".exe"):
+        self = (self+".exe")
+    explorer_list = ["file explorer", "explorer"]
+    flag = False
+    if not match_closest:
+        if (self.replace(".exe", "").strip()) in explorer_list:
+            close_explorer(output=output, throw_error=throw_error, app_name=(self.replace(".exe","")))
+            return
+        for pid in psutil.pids():
+            try:
+                process = psutil.Process(pid)
+                if process.name().lower() == self:
+                    process.kill()
+                    if not flag and output:
+                        print("CLOSING "+(self.replace(".exe","")).upper())
+                        flag = True
+            except: pass
+        if not flag and output:
+            if throw_error:
+                app_name = (self.replace(".exe","")).upper()
+                raise AppNotFound(app_name)
+            else:
+                print((self.replace(".exe","")).upper() +" is not running")
+    if match_closest:
+        app_jug = []
+        for pid in psutil.pids():
+            try:
+                process = psutil.Process(pid)
+                app_jug.append((process.name()))
+            except: pass
+        result = difflib.get_close_matches(self,app_jug, n=1, cutoff=0.6)
+        app_name = ' '.join(result).strip()
+        # print(app_jug)
+        # print(app_name)
+        ## EXCEPTION FOR CLOSING FILE EXPLORER
+        if (app_name.replace(".exe", "").strip()) in explorer_list:
+            # print("yes")
+            close_explorer(output=output, throw_error=throw_error, app_name=app_name)
+            return
+        command = ['taskkill', '/f', '/im',app_name]
+        # print(command)
+        with open('NUL', 'w') as null:
+            process = subprocess.Popen(command, stdout=null, stderr=null)
+            process.wait()
+            if process.returncode == 0:
+                if output:
+                    print("CLOSING "+(app_name.replace(".exe","")).upper())
+            else:
+                if output:
+                    if throw_error:
+                        app_name = (self.replace(".exe", "")).upper()
+                        raise AppNotFound(app_name)
+                    else:
+                        print((self.replace(".exe","")).upper() +" is not running")
+
+# FIND APPLICATION IF INSTALLED OR NOT :)
+def find_apps(app_names: list):
+    with open((os.path.join(main_path,"app_names.json")),"r") as f:
+        data = json.load(f)
+        keys = data.keys()
+        empty_list = []
+        for i in app_names:
+            result = difflib.get_close_matches(i,keys, cutoff=0.5)
+            empty_list.extend(result)
+        num = 0
+        if not empty_list:
+            print("NOTHIING LIKE THAT INSTALLED IN PC")
+            return
+        print("FOUND THESE APPLICATIONS INSTALLED: ")
+        print()
+        for app_name in empty_list:
+            num += 1
+            print(str(num)+". "+app_name.upper())
+
+# SEE PETANME(s) OF ORIGINAL APP(s)
+def change_log(self):
+    os.system("")
+    if self == "log":
+        with open((os.path.join(main_path,"app_names.json")),"r") as f:
+            data = json.load(f)
+            keys = list(data.keys())
+            values = list(data.values())
+            for i in values:
+                if i != "":
+                    position = values.index(i)
+                    app = keys[position]
+                    print(style.RED+(app.upper())+style.WHITE+" > "+style.GREEN+(i.upper())+style.RESET)
+    else:
+        with open((os.path.join(main_path,"app_names_temp.json")),"r") as f:
+            data = json.load(f)
+            keys = list(data.keys())
+            values = list(data.values())
+            for i in values:
+                if i != "":
+                    position = values.index(i)
+                    app = keys[position]
+                    print(style.RED+(app.upper())+style.WHITE+" > "+style.GREEN+(i.upper())+style.RESET)
+
+# LISTING APP(s) LIST - 2
+def list_apps():
+    print()
+    with open((os.path.join(main_path,"data.json")),"r") as file:
+        data = json.load(file)
+        key = data.keys()
+        keys = sorted(key)
+        count = 0
+        for app in keys:
+            if len(app.strip()) == 0 :
+                continue
+            else:
+                count += 1
+                print("{}. {}".format(count, app.strip().upper()))
+    print()
+
+# Give dictionary of appnames (Uppercase or lowercase)
+def give_appnames(upper=False):
+    with open((os.path.join(main_path,"data.json")),"r") as file:
+        data = json.load(file)
+    keys = data.keys()
+    if upper == True:
+        dict = {}
+        for k in keys:
+            change = {k.upper() : None}
+            dict.update(change)
+        keys_upper = dict.keys()
+        return keys_upper
+    if upper == False:
+        return keys
+
+# Function for making list
+def mklist(name="", path="", output=True):
+    path_exists = os.path.isdir(path)
+    flag = False
+    if not path or not path_exists:
+        cwd = os.getcwd()
+        path = cwd
+        flag = True
+    if not name:
+        name = "app_data.json"
+    if name.endswith(".txt"):
+        name = name
+    dictionary ={}
+    with open((os.path.join(path,name)),"w") as outfile:
+        json.dump(dictionary,outfile,indent = 4)
+    with open((os.path.join(main_path,"data.json")),"r") as data_f:
+        data = json.load(data_f)
+    with open((os.path.join(path,name)),"a+") as f:
+        g = open((os.path.join(path,name)),"r+")
+        g.truncate(0)
+        json.dump(data,f,indent=4)
+    if output:
+        if flag:
+            print("Successfully saved "+name+" in the working directory.")
+        if not flag:
+            print("Successfully saved "+name+" in the given directory.")
