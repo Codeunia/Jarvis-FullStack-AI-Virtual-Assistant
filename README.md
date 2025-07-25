@@ -62,4 +62,3 @@ Jarvis is being built to work both locally and online for remote use.
 ## 👨‍💻 Contributor
 
 - [AI-ash](https://github.com/AI-ash)
-- [Ashu-10-tech](https://github.com/Ashu-10-tech)
