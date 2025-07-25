@@ -1,7 +1,7 @@
 
 # 🤖 Jarvis – Your Voice-Activated AI Assistant
 <p align="center">
-**Jarvis is your personal voice-based assistant designed to automate your desktop tasks, chat with intelligence, and respond like your desi tech-savvy buddy.**
+Jarvis is your personal voice-based assistant designed to automate your desktop tasks, chat with intelligence, and respond like your desi tech-savvy buddy.
 </p>
 
 <p align="center">
