@@ -72,7 +72,8 @@ Understands how you're feeling and reacts accordingly.
 
 ## 📂 Project Structure
 ```
-├── ai.py                  # Main logic file
+├── main/
+│   └── ai.py              # Main logic file
 ├── src/
 │   ├── jarvis intro.mp3   # Voice response files
 │   └── jarivs wish.mp3
