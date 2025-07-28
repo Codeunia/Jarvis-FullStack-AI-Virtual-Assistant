@@ -1,0 +1,77 @@
+*{
+    padding: 0%;
+    margin: 0%;
+}
+body{
+    background-color: #000000;
+    overflow: hidden;
+}
+
+.center{
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+.btn {
+  border: none;
+  width: 100px;
+  height: 50px;
+  border-radius: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background: #000000;
+  cursor: none;
+  transition: all 450ms ease-in-out;
+
+}
+
+.sparkle {
+  fill: rgba(141, 223, 255);
+  transition: all 800ms ease;
+}
+
+.text {
+  font-weight: 600;
+  color: rgba(141, 223, 255);
+  font-size: medium;
+}
+
+.btn:hover {
+  background: linear-gradient(0deg,#6cf5f5,#3fe4ea);
+  box-shadow: inset 0px 1px 0px 0px rgba(141, 255, 255, 0.4),
+  inset 0px -4px 0px 0px rgba(141, 241, 255, 0.2),
+  0px 0px 0px 4px rgba(141, 212, 216, 0.493),
+  0px 0px 180px 0px rgb(141, 228, 255);
+  transform: translateY(-2px);
+}
+
+.btn:hover .text {
+  color: rgb(255, 255, 255);
+}
+
+.btn:hover .sparkle {
+  fill: rgb(255, 255, 255);
+  transform: scale(1.2);
+} 
+.center a{
+    text-decoration: none;
+}
+
+.torch-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: radial-gradient(circle 100px at var(--x, 50%) var(--y, 50%), transparent 0%, rgba(0,0,0,0.98) 80%);
+  transition: background 0.1s ease;
+  z-index: 2;
+}
