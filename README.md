@@ -16,7 +16,6 @@ Jarvis is your personal **voice-based AI assistant** — designed to automate de
 
 ## ✨ Features  
 
-- 🎙️ **Wake-Word Activation** – Just say *“wake up Jarvis”* and start talking.  
 - 💬 **Natural Conversations** – Hinglish input → Fluent witty English replies.  
 - ⚡ **Smart Replies** – Powered by **LLaMA 3.3 (Groq API)**.  
 - 📂 **Task Automation** – Open/close apps, take screenshots, access files.  
