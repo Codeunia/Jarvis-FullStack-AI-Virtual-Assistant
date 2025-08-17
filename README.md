@@ -7,7 +7,7 @@ Jarvis is your personal **voice-based AI assistant** — designed to automate de
 </p>
 
 <p align="center">
-  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.10+-blue.svg?style=for-the-badge&logo=python&logoColor=white" /></a>
+  <a href="https://www.python.org/"><img src="https://img.shields.io/badge/Python-3.9+-blue.svg?style=for-the-badge&logo=python&logoColor=white" /></a>
   <a href="https://fastapi.tiangolo.com/"><img src="https://img.shields.io/badge/FastAPI-⚡-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white" /></a>
   <a href="https://groq.com/"><img src="https://img.shields.io/badge/Groq-LLM_API-orange?style=for-the-badge&logo=openai&logoColor=white" /></a>
 </p>
