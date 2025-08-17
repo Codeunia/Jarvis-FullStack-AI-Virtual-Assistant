@@ -3,7 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from .ai import taskExecution, get_log_stream
+from .core import taskExecution, get_log_stream
 import uvicorn
 
 app = FastAPI()
