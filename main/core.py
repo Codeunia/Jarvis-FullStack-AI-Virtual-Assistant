@@ -64,10 +64,10 @@ def take_command():
     return "none"
 
 def wish():
-    # try:
-    #     AudioPlayer("src//jarivs wish.mp3").play(block=True)
-    # except:
-    #     pass
+    try:
+        AudioPlayer("src//jarivs wish.mp3").play(block=True)
+    except:
+        pass
 
     hour = int(datetime.datetime.now().hour)
     t = time.localtime()
@@ -98,7 +98,7 @@ def ai_talk(prompt):
             "You never sound robotic; you speak like a smart friend."
             "If the user asks for an explanation, description, detailed answer, or says 'tell me more',"
             "you switch to a longer, well-structured and clear response without losing your personality."
-            f"you keep record of our conversation in \n {history} and answer according to it."
+            f"you keep record of our conversation in {history} and answer according to it."
             "No need to return about conservation record or any hprintf just reply to what asked"},
         {
             "role": "user",
