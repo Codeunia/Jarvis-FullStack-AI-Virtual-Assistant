@@ -30,8 +30,7 @@ def log(msg: str):
         loop.create_task(log_queue.put(msg))   
     except RuntimeError:
         asyncio.run(log_queue.put(msg))
-
-def speak(audio):
+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 speak(audio):
     log(f"Jarvis: {audio} \n")
     conversation_history.append(f"Jarvis: {audio}")
     try:
@@ -84,7 +83,7 @@ def wish():
 
 
 def ai_talk(prompt):
-    client = Groq(api_key=os.getenv("GORQ_API_KEY"))
+    client = Groq(api_key=os.getenv("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"))
     prompt = prompt.replace("jarvis", "").strip()
     history = "\n".join(conversation_history)
 
